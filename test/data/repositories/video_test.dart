@@ -5,8 +5,8 @@ import 'package:video_player_app/data/repositories/repositories.dart';
 import 'package:video_player_app/data/services/services.dart';
 import 'package:video_player_app/domain/repositories/repositories.dart';
 
-import '../constants/video.dart';
-import '../mocks/api.dart';
+import '../../constants/video.dart';
+import '../../mocks/api.dart';
 
 void main() {
   final ApiService api = MockApiService();
