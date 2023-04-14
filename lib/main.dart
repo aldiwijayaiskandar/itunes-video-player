@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:video_player_app/config/config.dart';
+import 'package:video_player_app/config/singleton/locator.dart';
 import 'package:video_player_app/presentation/pages/home/home.dart';
 
-void main() {
+void main() async {
+  await initializeDependencies();
+
   runApp(const MyApp());
 }
 
