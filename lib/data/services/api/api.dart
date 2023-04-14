@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:video_player_app/config/config.dart';
 import 'package:video_player_app/data/services/api/interceptors/interceptors.dart';
 
 class ApiService {
   Dio setupDio({required String url, String? contentType}) {
     BaseOptions options = BaseOptions(
-      baseUrl: 'https://',
+      baseUrl: Environment.baseUrl,
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 10),
       contentType: contentType,

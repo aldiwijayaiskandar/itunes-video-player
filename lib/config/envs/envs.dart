@@ -9,4 +9,6 @@ class Environment {
 
     await dotenv.load(fileName: 'lib/config/envs/$environment.env');
   }
+
+  static String get baseUrl => dotenv.get("BASE_URL");
 }
