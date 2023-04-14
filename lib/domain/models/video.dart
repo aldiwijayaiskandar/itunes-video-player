@@ -1,4 +1,6 @@
-class Video {
+import 'package:equatable/equatable.dart';
+
+class Video extends Equatable {
   Video({
     required this.trackId,
     required this.trackName,
@@ -16,4 +18,7 @@ class Video {
         trackName = json["trackName"],
         trackTimeMillis = json["trackTimeMillis"],
         previewUrl = json['previewUrl'];
+
+  @override
+  List<Object?> get props => [trackId, trackName, trackTimeMillis, previewUrl];
 }
