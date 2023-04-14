@@ -1,38 +1,18 @@
 import 'package:dio/dio.dart';
-import 'package:video_player_app/config/config.dart';
-import 'package:video_player_app/data/services/api/interceptors/interceptors.dart';
+
+export 'setup.dart';
 
 class ApiService {
-  Dio setupDio({required String url, String? contentType}) {
-    BaseOptions options = BaseOptions(
-      baseUrl: Environment.baseUrl,
-      connectTimeout: const Duration(seconds: 10),
-      receiveTimeout: const Duration(seconds: 10),
-      contentType: contentType,
-      headers: {},
-    );
+  Dio dio;
 
-    Dio dioOption = Dio(options);
-
-    dioOption.interceptors.addAll(
-      [
-        InterceptorsWrapper(
-          onRequest: requestInterceptor,
-          onResponse: responseInterceptor,
-          onError: errorInterceptor,
-        ),
-      ],
-    );
-
-    return dioOption;
-  }
+  ApiService(this.dio);
 
   Future<Response> getApi({
     required String url,
     Map<String, dynamic>? params,
     CancelToken? cancelToken,
   }) =>
-      setupDio(url: url).get(
+      dio.get(
         url,
         queryParameters: params,
         cancelToken: cancelToken,
@@ -43,7 +23,7 @@ class ApiService {
     Map<String, dynamic>? body,
     CancelToken? cancelToken,
   }) =>
-      setupDio(url: url).post(
+      dio.post(
         url,
         data: body,
         cancelToken: cancelToken,
@@ -54,7 +34,7 @@ class ApiService {
     Map<String, dynamic>? body,
     CancelToken? cancelToken,
   }) =>
-      setupDio(url: url).patch(
+      dio.patch(
         url,
         data: body,
         cancelToken: cancelToken,
@@ -65,7 +45,7 @@ class ApiService {
     dynamic body,
     CancelToken? cancelToken,
   }) =>
-      setupDio(url: url).put(
+      dio.put(
         url,
         data: body,
         cancelToken: cancelToken,
@@ -77,7 +57,7 @@ class ApiService {
     Map<String, dynamic>? body,
     CancelToken? cancelToken,
   }) =>
-      setupDio(url: url).delete(
+      dio.delete(
         url,
         queryParameters: params,
         cancelToken: cancelToken,
