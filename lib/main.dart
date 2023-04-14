@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:video_player_app/config/config.dart';
+import 'package:video_player_app/presentation/pages/home/home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,6 +23,7 @@ class _MyAppState extends State<MyApp> {
               Brightness.light
           ? Themes.light
           : Themes.dark,
+      home: const HomePage(),
     );
   }
 }
