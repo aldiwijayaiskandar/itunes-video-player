@@ -5,7 +5,9 @@ import 'package:video_player_app/config/singleton/locator.dart';
 import 'package:video_player_app/presentation/pages/home/home.dart';
 
 void main() async {
-  await initializeDependencies();
+  await Future.wait(
+    [Environment.initializeEnvironment(), initializeDependencies()],
+  );
 
   runApp(const MyApp());
 }
