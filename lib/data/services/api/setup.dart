@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:video_player_app/config/config.dart';
-import 'package:video_player_app/data/services/api/interceptors/interceptors.dart';
 
 Dio setupDio({String? contentType}) {
   BaseOptions options = BaseOptions(
@@ -10,17 +9,5 @@ Dio setupDio({String? contentType}) {
     contentType: contentType,
   );
 
-  Dio dioOption = Dio(options);
-
-  dioOption.interceptors.addAll(
-    [
-      InterceptorsWrapper(
-        onRequest: requestInterceptor,
-        onResponse: responseInterceptor,
-        onError: errorInterceptor,
-      ),
-    ],
-  );
-
-  return dioOption;
+  return Dio(options);
 }
