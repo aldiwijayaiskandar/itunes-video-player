@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player_app/presentation/cubits/cubits.dart';
+import 'package:video_player_app/presentation/pages/home/widgets/widgets.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -34,20 +35,14 @@ class _HomePageState extends State<HomePage> {
         child: BlocBuilder<VideoListCubit, VideoListState>(
           builder: (_, state) {
             if (state is VideoListLoadingState) {
-              return Center(
-                child: CircularProgressIndicator(
-                  color: Theme.of(context).primaryColor,
-                ),
-              );
+              return const HomePageLoading();
             } else if (state is VideoListErrorState) {
-              return const Center(
-                child: Text("Error Fetching Video List"),
-              );
+              return const HomePageError();
             }
 
             return Column(
-              children: [
-                Text(state.data.length.toString()),
+              children: const [
+                HomeContent(),
               ],
             );
           },
