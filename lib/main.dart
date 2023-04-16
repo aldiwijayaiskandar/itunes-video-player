@@ -8,9 +8,8 @@ import 'package:video_player_app/presentation/cubits/cubits.dart';
 import 'package:video_player_app/presentation/pages/home/home.dart';
 
 void main() async {
-  await Future.wait(
-    [Environment.initializeEnvironment(), initializeDependencies()],
-  );
+  await Environment.initializeEnvironment();
+  await initializeDependencies();
 
   runApp(const MyApp());
 }
@@ -32,7 +31,7 @@ class _MyAppState extends State<MyApp> {
           ? Themes.light
           : Themes.dark,
       home: BlocProvider(
-        create: (_) => VideoListCubit(locator.get<VideoRepo>())..getVideoList(),
+        create: (_) => VideoListCubit(locator<VideoRepo>()),
         child: const HomePage(),
       ),
     );
