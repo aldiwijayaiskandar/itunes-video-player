@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player_app/presentation/cubits/cubits.dart';
+import 'package:video_player_app/presentation/pages/home/widgets/video.dart';
 import 'package:video_player_app/presentation/pages/home/widgets/widgets.dart';
 
 class HomePage extends StatefulWidget {
@@ -42,6 +43,7 @@ class _HomePageState extends State<HomePage> {
 
             return Column(
               children: const [
+                HomeVideo(),
                 HomeContent(),
               ],
             );
