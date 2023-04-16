@@ -4,8 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player_app/config/config.dart';
 import 'package:video_player_app/config/singleton/locator.dart';
 import 'package:video_player_app/domain/repositories/repositories.dart';
-import 'package:video_player_app/presentation/cubits/cubits.dart';
-import 'package:video_player_app/presentation/pages/home/home.dart';
+import 'package:video_player_app/presentation/presentation.dart';
 
 void main() async {
   await Environment.initializeEnvironment();
@@ -30,8 +29,15 @@ class _MyAppState extends State<MyApp> {
               Brightness.light
           ? Themes.light
           : Themes.dark,
-      home: BlocProvider(
-        create: (_) => VideoListCubit(locator<VideoRepo>()),
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (_) => CurrentVideoCubit(),
+          ),
+          BlocProvider(
+            create: (_) => VideoListCubit(locator<VideoRepo>()),
+          ),
+        ],
         child: const HomePage(),
       ),
     );

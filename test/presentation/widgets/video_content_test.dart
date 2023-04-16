@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:video_player_app/domain/models/video.dart';
-import 'package:video_player_app/presentation/widgets/video_content.dart';
+import 'package:video_player_app/presentation/presentation.dart';
 
 import '../../constants/constants.dart';
 import '../../utils/utils.dart';
@@ -15,7 +15,9 @@ void main() {
       await Utils.makeTestableWidget(
         tester: tester,
         body: VideoContent(
+          isActive: false,
           data: video,
+          onClick: () {},
         ),
       );
 

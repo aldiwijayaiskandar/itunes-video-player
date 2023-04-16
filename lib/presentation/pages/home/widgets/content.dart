@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:video_player_app/presentation/cubits/video_list/video.dart';
+import 'package:video_player_app/presentation/cubits/cubits.dart';
 import 'package:video_player_app/presentation/widgets/widgets.dart';
 
 class HomeContent extends StatelessWidget {
@@ -9,12 +9,23 @@ class HomeContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<VideoListCubit, VideoListState>(
-      builder: (_, state) => Expanded(
+      builder: (_, videoListState) => Expanded(
         child: ListView.builder(
-          itemBuilder: (_, index) => VideoContent(
-            data: state.data[index],
+          itemBuilder: (_, index) => BlocBuilder<CurrentVideoCubit, int>(
+            builder: (context, currentIndex) {
+              return VideoContent(
+                isActive: currentIndex == index,
+                data: videoListState.data[index],
+                onClick: () {
+                  BlocProvider.of<CurrentVideoCubit>(context)
+                      .setCurrentVideoIndex(
+                    index,
+                  );
+                },
+              );
+            },
           ),
-          itemCount: state.data.length,
+          itemCount: videoListState.data.length,
         ),
       ),
     );
