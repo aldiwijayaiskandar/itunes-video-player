@@ -12,12 +12,6 @@ import '../../../utils/utils.dart';
 void main() {
   late VideoListCubit videoListCubit;
 
-  setUpAll(() {
-    mocktail.registerFallbackValue(VideoListLoadingStateFake());
-    mocktail.registerFallbackValue(VideoListSuccessStateFake());
-    mocktail.registerFallbackValue(VideoListErrorStateFake());
-  });
-
   setUp(() {
     videoListCubit = VideoListCubitMock();
   });
