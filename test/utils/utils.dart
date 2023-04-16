@@ -11,8 +11,8 @@ class Utils {
     return mockNetworkImagesFor(() async {
       return tester.pumpWidget(
         MaterialApp(
-          home: Material(
-            child: body,
+          home: Scaffold(
+            body: body,
           ),
           theme: Themes.light,
         ),
