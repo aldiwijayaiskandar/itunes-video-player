@@ -2,7 +2,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:video_player_app/domain/repositories/repositories.dart';
-import 'package:video_player_app/presentation/cubits/video_list/video.dart';
+import 'package:video_player_app/presentation/cubits/cubits.dart';
 
 import '../../constants/constants.dart';
 import '../../mocks/mocks.dart';
