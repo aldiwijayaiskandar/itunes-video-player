@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -23,7 +25,7 @@ void main() {
       (_) => Future(
         () => Response(
           requestOptions: RequestOptions(),
-          data: videoJson,
+          data: jsonEncode(videoJson),
         ),
       ),
     );

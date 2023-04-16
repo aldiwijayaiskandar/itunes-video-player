@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:video_player_app/data/services/api/api.dart';
 import 'package:video_player_app/domain/models/models.dart';
 import 'package:video_player_app/domain/repositories/repositories.dart';
@@ -13,7 +15,7 @@ class VideoRepoImpl extends VideoRepo {
       url: "/search?term=jack+johnson&entity=musicVideo",
     );
 
-    return (result.data['results'] as List)
+    return (jsonDecode(result.data)['results'] as List)
         .map((x) => Video.fromJson(x))
         .toList();
   }
