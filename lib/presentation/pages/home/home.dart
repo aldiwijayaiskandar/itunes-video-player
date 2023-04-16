@@ -33,6 +33,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
+        bottom: false,
         child: BlocBuilder<VideoListCubit, VideoListState>(
           builder: (_, state) {
             if (state is VideoListLoadingState) {
