@@ -6,6 +6,7 @@ void main() {
   const String trackName = "You And Your Heart";
   const int trackTimeMillis = 5000;
   const String previewUrl = "testPreviewUrl";
+  const String thumbnailUrl = "testThumbnailUrl";
 
   test("Video constructor returns value correctly", () async {
     Video video = Video(
@@ -13,6 +14,7 @@ void main() {
       trackName: trackName,
       trackTimeMillis: trackTimeMillis,
       previewUrl: previewUrl,
+      thumbnailUrl: thumbnailUrl,
     );
 
     expect(video.trackId, trackId);
@@ -20,7 +22,13 @@ void main() {
     expect(video.trackTimeMillis, trackTimeMillis);
     expect(video.previewUrl, previewUrl);
 
-    expect(video.props, [trackId, trackName, trackTimeMillis, previewUrl]);
+    expect(video.props, [
+      trackId,
+      trackName,
+      trackTimeMillis,
+      previewUrl,
+      thumbnailUrl,
+    ]);
   });
 
   test("Video.fromJson() returns value correctly", () async {
@@ -29,6 +37,7 @@ void main() {
       "trackName": trackName,
       "trackTimeMillis": trackTimeMillis,
       "previewUrl": previewUrl,
+      "artworkUrl100": thumbnailUrl,
     };
 
     Video video = Video.fromJson(videoMap);
@@ -37,7 +46,14 @@ void main() {
     expect(video.trackName, trackName);
     expect(video.trackTimeMillis, trackTimeMillis);
     expect(video.previewUrl, previewUrl);
+    expect(video.thumbnailUrl, thumbnailUrl);
 
-    expect(video.props, [trackId, trackName, trackTimeMillis, previewUrl]);
+    expect(video.props, [
+      trackId,
+      trackName,
+      trackTimeMillis,
+      previewUrl,
+      thumbnailUrl,
+    ]);
   });
 }
