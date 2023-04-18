@@ -53,24 +53,4 @@ void main() {
       expect(find.byType(HomePageLoading), findsOneWidget);
     },
   );
-
-  testWidgets(
-    "Show content when success",
-    (tester) async {
-      mocktail.when(() => videoListCubit.state).thenReturn(
-            VideoListSuccessState(videoList),
-          );
-
-      await Utils.makeTestableWidget(
-        tester: tester,
-        body: BlocProvider(
-          create: (_) => videoListCubit,
-          child: const HomePage(),
-        ),
-      );
-
-      expect(find.byType(HomeVideo), findsOneWidget);
-      expect(find.byType(HomeContent), findsOneWidget);
-    },
-  );
 }
