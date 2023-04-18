@@ -16,18 +16,47 @@ class VideoPlayerControls extends StatefulWidget {
 }
 
 class _VideoPlayerControlsState extends State<VideoPlayerControls> {
-  late ChewieController controller;
+  bool _hideThumbnail = false;
+  Duration _duration = Duration.zero;
+  Duration _lastPosition = Duration.zero;
+  late ChewieController _controller;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    controller = ChewieController.of(context);
+    _controller = ChewieController.of(context);
+    _controller.videoPlayerController.addListener(listener);
+    setState(() {
+      _hideThumbnail = false;
+    });
   }
 
-  Widget _buildButton(Widget icon) => SizedBox(
-        width: 50,
-        height: 50,
-        child: icon,
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.videoPlayerController.removeListener(listener);
+  }
+
+  void listener() {
+    setState(() {
+      _duration = _controller.videoPlayerController.value.duration;
+      _lastPosition = _controller.videoPlayerController.value.position;
+    });
+  }
+
+  void startVideo() {
+    setState(() {
+      _hideThumbnail = true;
+    });
+  }
+
+  Widget _buildButton(Widget icon, void Function() onTap) => GestureDetector(
+        onTap: onTap,
+        child: SizedBox(
+          width: 50,
+          height: 50,
+          child: icon,
+        ),
       );
 
   Widget _buildPreviousButton() => _buildButton(
@@ -37,6 +66,10 @@ class _VideoPlayerControlsState extends State<VideoPlayerControls> {
             color: Colors.white,
           ),
         ),
+        () {
+          startVideo();
+          _controller.seekTo(_lastPosition - const Duration(seconds: 15));
+        },
       );
 
   Widget _buildNextButton() => _buildButton(
@@ -46,6 +79,10 @@ class _VideoPlayerControlsState extends State<VideoPlayerControls> {
             color: Colors.white,
           ),
         ),
+        () {
+          startVideo();
+          _controller.seekTo(_lastPosition + const Duration(seconds: 15));
+        },
       );
 
   Widget _buildSpacer() => const SizedBox(width: 10);
@@ -53,7 +90,8 @@ class _VideoPlayerControlsState extends State<VideoPlayerControls> {
   Widget _buildPlayButton() {
     return GestureDetector(
       onTap: () {
-        controller.togglePause();
+        _controller.togglePause();
+        startVideo();
       },
       child: Container(
         width: 50,
@@ -64,7 +102,9 @@ class _VideoPlayerControlsState extends State<VideoPlayerControls> {
         ),
         child: Center(
           child: Icon(
-            controller.isPlaying ? Icons.pause : Icons.play_arrow,
+            _controller.videoPlayerController.value.isPlaying
+                ? Icons.pause
+                : Icons.play_arrow,
             color: Colors.white,
           ),
         ),
@@ -77,7 +117,7 @@ class _VideoPlayerControlsState extends State<VideoPlayerControls> {
         right: 16,
         child: GestureDetector(
           onTap: () async {
-            if (controller.isFullScreen) {
+            if (_controller.isFullScreen) {
               await SystemChrome.setEnabledSystemUIMode(
                 SystemUiMode.edgeToEdge,
                 overlays: SystemUiOverlay.values,
@@ -88,10 +128,10 @@ class _VideoPlayerControlsState extends State<VideoPlayerControls> {
                 overlays: [],
               );
             }
-            controller.toggleFullScreen();
+            _controller.toggleFullScreen();
           },
-          child: const Icon(
-            Icons.fullscreen,
+          child: Icon(
+            _controller.isFullScreen ? Icons.fullscreen_exit : Icons.fullscreen,
             color: Colors.white,
           ),
         ),
@@ -100,23 +140,13 @@ class _VideoPlayerControlsState extends State<VideoPlayerControls> {
   Widget _buildProgress() => Positioned(
         bottom: 0,
         left: 0,
-        child: Stack(
-          children: [
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: 5,
-              color: Colors.grey.shade400,
-            ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              child: Container(
-                width: 100,
-                height: 5,
-                color: ColorConstants.orange,
-              ),
-            ),
-          ],
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: LinearProgressIndicator(
+            color: ColorConstants.orange,
+            backgroundColor: Colors.grey.shade400,
+            value: _lastPosition.inSeconds / _duration.inSeconds,
+          ),
         ),
       );
 
@@ -124,12 +154,14 @@ class _VideoPlayerControlsState extends State<VideoPlayerControls> {
   Widget build(BuildContext context) {
     return Container(
       height: double.infinity,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: NetworkImage(widget.thumbnailUrl),
-          fit: BoxFit.fill,
-        ),
-      ),
+      decoration: _hideThumbnail
+          ? null
+          : BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage(widget.thumbnailUrl),
+                fit: BoxFit.fill,
+              ),
+            ),
       child: Stack(
         alignment: Alignment.center,
         children: [
