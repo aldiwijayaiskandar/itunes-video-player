@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:video_player_app/constants/colors.dart';
 
 class Themes {
   static ThemeData get light {
     return ThemeData(
-      primaryColor: const Color.fromRGBO(255, 143, 20, 1),
+      primaryColor: ColorConstants.orange,
       scaffoldBackgroundColor: Colors.white,
       textTheme: const TextTheme().apply(
         bodyColor: Colors.black,
@@ -14,7 +15,7 @@ class Themes {
 
   static ThemeData get dark {
     return ThemeData(
-      primaryColor: const Color.fromRGBO(255, 143, 20, 1),
+      primaryColor: ColorConstants.orange,
       scaffoldBackgroundColor: Colors.black,
       textTheme: const TextTheme().apply(
         bodyColor: Colors.white,
